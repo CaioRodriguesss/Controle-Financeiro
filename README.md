@@ -1,6 +1,9 @@
 <h1>Projeto de Controle Financeiro</h1>
 
+<h2>Em andamento...</h2>
 
+- [x] Noções gerais
+- [x] Guia de uso
 
 <h2>O que me motivou</h2>
 
@@ -34,6 +37,8 @@ as informaões por meio de gráficos.</p>
     <li>Pyinstaller</li>
     <li>CSV</li>
 </ul>
+
+<h2>Noções gerais</h2>
 
 <h2>Instruções de download</h2>
 
