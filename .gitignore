@@ -1,0 +1,12 @@
+.idea/
+__pycache__/
+BACKUP CSV/
+build/
+dist/
+imagens guia de uso/
+BALANCETE.csv
+BALANCO PATRIMONIAL.csv
+LIVRO RAZAO.csv
+P CONTAS.csv
+tarefas.txt
+instalador.py
