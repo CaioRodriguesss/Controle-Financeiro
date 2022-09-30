@@ -56,7 +56,13 @@ dele para a sua área de trabalho</p>
 <ul>
 <li><a href="#Inclusao-de-contas"> Inclusão de contas</a></li>
 <li><a href="#Manutencao-de-contas"> Manutenção de contas</a></li>
-<li>Inclusão de saldo inicial das contas</li>
+    <ul>
+        <li><a href="#Alteracao-de-contas"> 
+             Alteração de contas no plano de contas</a></li>
+        <li><a href="#Exclusao-de-contas"> 
+             Exclusão de contas no plano de contas</a></li>
+    </ul>
+<li><a href="#Inclusao-de-si-contas"> Inclusão de saldo inicial das contas</a></li>
 <li>Manutenção do saldo inicial das contas</li>
 <li>Lançamentos</li>
 <li>Manutenção dos lançamentos</li>
@@ -121,9 +127,76 @@ como executar o processo.</p>
 
 <h3 id="Manutencao-de-contas"> Manutenção de contas</h3>
 
+<p>A tela para manutenção do plano de contas permite alterar alguns
+campos do plano de contas baseando-se no número da conta. Além disso,
+também é possível efetuar a exclusão de uma conta utilizando o 
+número da conta como base.</p>
 
+<h4 id="Alteracao-de-contas"> Alteração de conta no plano de contas</h4>
 
+<ol>
+    <li>Clique na tela do plano de contas no menu de telas.</li>
+    <br>
+    <li>Visualize a conta que deseja alterar no plano de contas
+    clicando no botão "Visualizar Plano de Contas".</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 1.png">
+    <br>
+    <br>
+    <li>Vamos alterar a conta que criamos anteriormente como teste, 
+    alterando o campo de número da conta e de descrição da conta.
+    Para isso, basta colocar o número da conta no campo de "Número
+    da conta a alterar" e preencher somente os campos que você
+    deseja alterar. Os campos em branco não serão alterados.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 2.png">
+    <br>
+    <br>
+    <li>Clique no botão "Ok" da pop-up de confirmação.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 3.png">
+    <br>
+    <br>
+    <li>Clique no botão de "Visualizar Plano de Contas" novamente, 
+    busque pelo novo número de conta que você passou ou pelo antigo
+    número, caso não tenha alterado o número e verifique as 
+    modificações. Como é possível perceber, o número e a descrição foram
+    alterados.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 4.png">
+    <br>
+    <p>Observe. Caso queira fazer algum tipo de alteração na conta
+    que não seja o campo de "Descricao da Conta", é mais aconselhável
+    que seja efetuada a exclusão da conta que você criou.</p>
+</ol>
 
+<h4 id="Exclusao-de-contas"> Exclusão de conta no plano de contas</h4>
+
+<ol>
+    <li>Clique na tela do plano de contas no menu de telas.</li>
+    <br>
+    <li>Visualize as contas para identificar o número da conta que 
+        deverá ser excluída.</li>
+    <li>Informe o número da conta que você deseja excluir e 
+        clique no botão de "Remover". Aqui, vamos excluir
+        a conta 5.1.7 que alteramos para 5.1.8 e acabou ficando
+        fora da ordem padrão.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 5.png">
+    <br>
+    <br>
+    <li>Clique no botão de "Ok" na pop-up de confirmação.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 6.png">
+    <br>
+    <br>
+    <li>Após visualizar novamente o plano de contas, é possível constatar
+        que a conta que informamos foi excluída.</li>
+    <br>
+    <img src="Imagens guia de uso/3 - manutencao de contas - 7.png">
+</ol>
+
+<h3 id="Inclusao-de-si-contas"> Inclusão de saldo inicial das contas </h3>
 
 
 
