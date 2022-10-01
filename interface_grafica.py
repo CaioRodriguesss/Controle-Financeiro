@@ -36,6 +36,9 @@ class InterfaceGrafica:
              sg.B('Gráfico Balanço Patrimonial', key='-PRINGBP-', size=prin_tam)]
         ]
 
+        # Lista com anos utilizáveis, visa substituir alguma alteração que leve muito tempo indo de campo em campo.
+        prin_anos = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
+
         window = sg.Window(title='Interface para controle financeiro', layout=principal_layout)
 
         while True:
@@ -433,7 +436,7 @@ class InterfaceGrafica:
                     [sg.T('MES', size=si_t_tam),
                      sg.Combo(key='-SIMES-', values=[x for x in range(1, 13)], readonly=True, size=si_i_tam),
                      sg.T('ANO', size=si_t_tam),
-                     sg.Combo(key='-SIANO-', values=[x for x in range(2022, 2026)], readonly=True, size=si_i_tam)],
+                     sg.Combo(key='-SIANO-', values=[x for x in prin_anos], readonly=True, size=si_i_tam)],
                     [sg.T('CONTA', size=si_t_tam),
                      sg.Combo(key='-SICONTA-', values=[c for c in CF.contas_analiticas], readonly=True, size=si_i_tam)],
                     [sg.T('SALDO INICIAL', size=si_t_tam), sg.In(key='-SISALDO-', size=si_i_tam, enable_events=True)],
@@ -510,7 +513,7 @@ class InterfaceGrafica:
                     [sg.In(key='-ASILIN-', size=asi_i_tam, pad=asi_p_tam),
                      sg.Combo(key='-ASIMES-', values=[x for x in range(1, 13)], size=asi_i_tam, pad=asi_p_tam,
                               readonly=True),
-                     sg.Combo(key='-ASIANO-', values=[x for x in range(2022, 2026)], size=asi_i_tam, pad=asi_p_tam,
+                     sg.Combo(key='-ASIANO-', values=[x for x in prin_anos], size=asi_i_tam, pad=asi_p_tam,
                               readonly=True),
                      sg.Combo(key='-ASICONTA-', values=[c for c in CF.contas_analiticas], size=asi_i_tam, pad=asi_p_tam,
                               readonly=True),
@@ -605,7 +608,7 @@ class InterfaceGrafica:
 
                 balan_layout = [
                     [sg.T('Mes'), sg.Combo(key='-BALANMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-BALANANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-BALANANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-BALANBVIS-', button_text='Visualizar Balancete'),
                      sg.B(key='-BALANBGER-', button_text='Gerar'),
                      sg.B(key='-BALANBLIMP-', button_text='Limpar'), sg.B(key='-BALANBCANC-', button_text='Cancelar')]
@@ -651,7 +654,7 @@ class InterfaceGrafica:
 
                 manba_layout = [
                     [sg.T('Mes'), sg.Combo(key='-MANBAMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-MANBAANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-MANBAANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-MANBABEXC-', button_text='Excluir'), sg.B(key='-MANBABLIMP-', button_text='Limpar'),
                      sg.B(key='-MANBABCANC-', button_text='Cancelar')]
                 ]
@@ -692,7 +695,7 @@ class InterfaceGrafica:
             if event == '-PRINAPR-':
                 apr_layout = [
                     [sg.T('Mes'), sg.Combo(key='-APRMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-APRANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-APRANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-APRBGER-', button_text='Gerar'), sg.B(key='-APRBLIMP-', button_text='Limpar'),
                      sg.B(key='-APRBCANC-', button_text='Cancelar')]
                 ]
@@ -738,7 +741,7 @@ class InterfaceGrafica:
             if event == '-PRINMANAPR-':
                 man_apr_layout = [
                     [sg.T('Mes'), sg.Combo(key='-MANAPRMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-MANAPRANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-MANAPRANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-MANAPRBEXCL-', button_text='Excluir'), sg.B(key='-MANAPRBLIMP-', button_text='Limpar'),
                      sg.B(key='-MANAPRBCANC-', button_text='Cancelar')]
                 ]
@@ -780,7 +783,7 @@ class InterfaceGrafica:
 
                 bp_layout = [
                     [sg.T('Mes'), sg.Combo(key='-BPMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-BPANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-BPANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-BPBSI-', button_text='Incluir Saldo Inicial'),
                      sg.B(key='-BPBGER-', button_text='Gerar'), sg.B(key='-BPBLIMP-', button_text='Limpar'),
                      sg.B(key='-BPBCANC-', button_text='Cancelar')],
@@ -877,7 +880,7 @@ class InterfaceGrafica:
 
                 man_bp_layout = [
                     [sg.T('Mes'), sg.Combo(key='-MANBPMES-', values=[x for x in range(1, 13)], readonly=True),
-                     sg.T('Ano'), sg.Combo(key='-MANBPANO-', values=[x for x in range(2022, 2026)], readonly=True)],
+                     sg.T('Ano'), sg.Combo(key='-MANBPANO-', values=[x for x in prin_anos], readonly=True)],
                     [sg.B(key='-MANBPBEXCL-', button_text='Excluir'), sg.B(key='-MANBPBLIMP-', button_text='Limpar'),
                      sg.B(key='-MANBPBCANC-', button_text='Cancelar')]
                 ]
@@ -922,10 +925,10 @@ class InterfaceGrafica:
                 gdre_layout = [
                     [sg.T('De: '), sg.T('Mes'),
                      sg.Combo(values=[x for x in range(1, 13)], key='-GDREDEMES-', readonly=True),
-                     sg.T('Ano'), sg.Combo(values=[x for x in range(2022, 2026)], key='-GDREDEANO-', readonly=True)],
+                     sg.T('Ano'), sg.Combo(values=[x for x in prin_anos], key='-GDREDEANO-', readonly=True)],
                     [sg.T('Até:'), sg.T('Mes'),
                      sg.Combo(values=[x for x in range(1, 13)], key='-GDREATEMES-', readonly=True),
-                     sg.T('Ano'), sg.Combo(values=[x for x in range(2022, 2026)], key='-GDREATEANO-', readonly=True)],
+                     sg.T('Ano'), sg.Combo(values=[x for x in prin_anos], key='-GDREATEANO-', readonly=True)],
                     [sg.Push(), sg.B(key='-GDREBBAR-', button_text='Barras'),
                      sg.B(key='-GDREBPIZ-', button_text='Pizza'), sg.B(key='-GDREBLIMP-', button_text='Limpar'),
                      sg.B(key='-GDREBCANC-', button_text='Cancelar')]
@@ -986,10 +989,10 @@ class InterfaceGrafica:
                 gbp_layout = [
                     [sg.T('De: '), sg.T('Mes'),
                      sg.Combo(values=[x for x in range(1, 13)], key='-GBPDEMES-', readonly=True),
-                     sg.T('Ano'), sg.Combo(values=[x for x in range(2022, 2026)], key='-GBPDEANO-', readonly=True)],
+                     sg.T('Ano'), sg.Combo(values=[x for x in prin_anos], key='-GBPDEANO-', readonly=True)],
                     [sg.T('Até:'), sg.T('Mes'),
                      sg.Combo(values=[x for x in range(1, 13)], key='-GBPATEMES-', readonly=True),
-                     sg.T('Ano'), sg.Combo(values=[x for x in range(2022, 2026)], key='-GBPATEANO-', readonly=True)],
+                     sg.T('Ano'), sg.Combo(values=[x for x in prin_anos], key='-GBPATEANO-', readonly=True)],
                     [sg.Push(), sg.B(key='-GBPBLIN-', button_text='Linha'),
                      sg.B(key='-GBPBLIMP-', button_text='Limpar'),
                      sg.B(key='-GBPBCANC-', button_text='Cancelar')]
@@ -1028,19 +1031,4 @@ class InterfaceGrafica:
 
                 window15.close()
 
-                # FEITO - importante - agrupar os valores no balanço patrimonial para as contas sinteticas
-                # FEITO - falta colocar o saldo inicial no balanço patrimonial
-                # FEITO - Falta colocar as excessões do saldo inicial
-                # FEITO- falta fazer a função de manutenção do balanço patrimonial
-                # FEITO - Organizar o balanço patrimonial, porque os dados são anexados, não sobrepostos
-                # PENDENTE - Botões de visualizar tem que visualizar de acordo com o período
-                # FEITO - Falta colocar excessões na manutenção do Balanco Patrimonial
-                # FEITO - controle_financeiro entender a linha 594 e 494
-                # FEITO - O balanço patrimonial tá gerando mais de um período
-                # FEITO - Tem que arrumar os códigos dos eventos, alguns estão sem o -EVENTO-
-                # FEITO - Criar excessões do grafico de barras da DRE (Sem dados para o periodo)
-                # FEITO - Criar excessões do grafico de pizza da DRE
-                # FEITO - Desenvolver gráfico de linhas para o balanço patrimonial
-                # PENDENTE - Testar excessoes grafi ode linha bp
-                # FEITO - Rotulo de dados não aparece no grafico de linha bp com só um mes de periodo
-        window.close()  # tem que pensar em como fazer o balancete, é bom saBER USAR o pandas, sqlite3 no futuro
+        window.close()

@@ -198,6 +198,19 @@ número da conta como base.</p>
 
 <h3 id="Inclusao-de-si-contas"> Inclusão de saldo inicial das contas </h3>
 
+<ol>
+    <li>Clique no botão de "Saldo inicial" no menu de telas.</li>
+    <br>
+    <li>Irá abrir a tela de inclusão de saldo inicial para as contas.</li>
+    <p>As contas disponíveis para receber um valor de saldo inicial
+    são somente as contas do tipo analítica, as contas do tipo sintética
+    apenas agregam valores das contas analíticas filhas dentro do seu escopo.</p>
+    <li></li>
+</ol>
+
+## Encontrei um problema com as datas, o ano de 2021 não pode ser trazido
+## vou precisar dele até para o meu próprio controle.
+## atualizar códigos dos campos de combo.
 
 
 
