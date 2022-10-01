@@ -205,12 +205,11 @@ número da conta como base.</p>
     <p>As contas disponíveis para receber um valor de saldo inicial
     são somente as contas do tipo analítica, as contas do tipo sintética
     apenas agregam valores das contas analíticas filhas dentro do seu escopo.</p>
-    <li></li>
+    <li>Selecione o mês e o ano para consideração, o ideal é que você considere
+    como dados para saldo inicial o período anterior ao que você utilizará 
+    para início do controle. Para o exemplo, utilizarei as contas 
+    Banco Inter e Banco Itau.</li>
 </ol>
-
-## Encontrei um problema com as datas, o ano de 2021 não pode ser trazido
-## vou precisar dele até para o meu próprio controle.
-## atualizar códigos dos campos de combo.
 
 
 

@@ -457,7 +457,9 @@ class InterfaceGrafica:
                         si_layout_visualizar_saldo_inicial = [
                             [sg.T('SALDOS INICIAIS DAS CONTAS')],
                             [sg.Table(headings=[c for c in CF.saldo_inicial[0][0:7]],
-                                      values=[c for c in CF.saldo_inicial[1:][0:7]], justification='left')],
+                                      values=[c for c in CF.saldo_inicial[1:][0:7]],
+                                      justification='left',
+                                      key='-SIVISSITAB-')],
                             [sg.B(key='-SIVISSIBOK-', button_text='OK')],
                         ]
                         window6_1 = sg.Window(title='Tabela Saldo Inicial', layout=si_layout_visualizar_saldo_inicial,
@@ -484,10 +486,12 @@ class InterfaceGrafica:
                                 saldo_final=values6['-SISALDO-']
                             )
                             CF.atualizar_balancete()
+
                             sg.popup(f"Saldo inicial da conta {values6['-SICONTA-']} incluído com sucesso!",
                                      title='Inclusão de Saldo Inicial')
                             for i in values6.keys():
                                 window6[i].update(value='')
+
                         except ex.ContaComSaldoInicial:
                             sg.popup(f"A conta {values6['-SICONTA-']} já possui um saldo inicial.",
                                      title='Erro Saldo Inicial')
@@ -584,7 +588,8 @@ class InterfaceGrafica:
                         for i in values7.keys():
                             if i != '-ASIREMOV-':
                                 window7[i].update(value='')
-                    # EVENTO DE REMOÇÃO DO BAÇANCETE
+
+                    # EVENTO DE REMOÇÃO DO BALANCETE
                     if event7 == '-ASIRECANC-':
                         break
                     if event7 == '-ASIREREM-':

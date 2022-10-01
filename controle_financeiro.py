@@ -61,6 +61,8 @@ class ControleFinanceiro:
                     linha += 1
                 if dados[1] == 'SALDOINICIAL':
                     self.saldo_inicial.append(dados)
+                if dados[1] == 'NORMAL':
+                    break
 
         self.atualizar_analiticas_sinteticas()
 
@@ -287,6 +289,16 @@ class ControleFinanceiro:
             if ind[2].strip() == 'S':
                 self.contas_sinteticas.append(ind[1])
 
+    def atualizar_saldo_inicial(self):
+        self.saldo_inicial.clear()
+        for ind in self.balancete_verificacao[:1]:
+            self.saldo_inicial.append(ind)
+        for ind in self.balancete_verificacao[1:]:
+            if ind[1] == 'SALDOINICIAL':
+                self.saldo_inicial.append(ind)
+            if ind[1] == 'NORMAL':
+                break
+
     # Altera qualquer campo do razão utilizando o numero da linha e da coluna como índices. None foi atribuído aos
     # campos porque em caso de parâmetros com None, nenhuma alteração será feita no campo representado pela linha e
     # pela coluna. O novo valor é atribuído acessando a linha informada e a coluna baseando-se na ordem dos índices
@@ -372,6 +384,16 @@ class ControleFinanceiro:
              str(desc_conta).strip().upper(), saldo_inicial, movto_deb, movto_cre, saldo_final]
         )
 
+        lista_ordenar_balancete = ManP.ordernar_balancete(self.balancete_verificacao)
+
+        self.balancete_verificacao.clear()
+
+        for _, val in enumerate(lista_ordenar_balancete):
+            self.balancete_verificacao.append([val[0], val[1], val[2], val[3], val[4], val[5], val[6],
+                                               val[7], val[8], val[9]])
+
+        self.atualizar_saldo_inicial()
+
     # Faz a inclusão das inclusões e alterações feitas na lista self.balancete_verificacao no arquivo CSV
     # balancete.
     def atualizar_balancete(self):
@@ -412,10 +434,19 @@ class ControleFinanceiro:
         if num_linha < 1:
             raise ex.ExclusaoNaoPermitida('Os rótulos das colunas não podem ser removidos.')
         for i, v in enumerate(self.balancete_verificacao):
-            print(i, v)
             if str(num_linha).strip() == v[0]:
                 self.balancete_verificacao.pop(i)
                 break
+
+        lista_ordenar_balancete = ManP.ordernar_balancete(self.balancete_verificacao)
+
+        self.balancete_verificacao.clear()
+
+        for _, val in enumerate(lista_ordenar_balancete):
+            self.balancete_verificacao.append([val[0], val[1], val[2], val[3], val[4], val[5], val[6],
+                                               val[7], val[8], val[9]])
+
+        self.atualizar_saldo_inicial()
 
     # === MÉTODOS PARA CONSOLIDAR OS MOVIMENTOS A CREDITO E A DEBITO DO BALANCETE === #
 
