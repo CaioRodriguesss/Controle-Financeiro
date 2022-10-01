@@ -63,7 +63,7 @@ dele para a sua área de trabalho</p>
              Exclusão de contas no plano de contas</a></li>
     </ul>
 <li><a href="#Inclusao-de-si-contas"> Inclusão de saldo inicial das contas</a></li>
-<li>Manutenção do saldo inicial das contas</li>
+<li><a href="#Manutencao-si"> Manutenção do saldo inicial das contas </a></li>
 <li>Lançamentos</li>
 <li>Manutenção dos lançamentos</li>
 <li>Geração do balancete de verificação</li>
@@ -209,7 +209,20 @@ número da conta como base.</p>
     como dados para saldo inicial o período anterior ao que você utilizará 
     para início do controle. Para o exemplo, utilizarei as contas 
     Banco Inter e Banco Itau.</li>
+    <br>
+    <img src="Imagens guia de uso/4 - inclusao saldo inicial - 1.png">
+    <br>
+    <br>
+    <img src="Imagens guia de uso/4 - inclusao saldo inicial - 2.png">
+    <br>
+    <br>
+    <li>Ao clicar no botão de "Visualizar Saldo Inicial", é possível
+    verificar as adições feitas no saldo inicial das contas que selecionamos.</li>
+    <br>
+    <img src="Imagens guia de uso/4 - inclusao saldo inicial - 3.png">
 </ol>
+
+<h3 id="Manutencao-si"> Manutenção do saldo inicial das contas </h3>
 
 
 
