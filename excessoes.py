@@ -66,8 +66,18 @@ class ContaNaoEncontrada(Exception):
     def __str__(self):
         print(self.msg)
 
+# Saldo inicial
+
 
 class ExclusaoNaoPermitida(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        print(self.msg)
+
+
+class LinhaInexistente(Exception):
     def __init__(self, msg):
         self.msg = msg
 

@@ -392,8 +392,6 @@ class ControleFinanceiro:
             self.balancete_verificacao.append([val[0], val[1], val[2], val[3], val[4], val[5], val[6],
                                                val[7], val[8], val[9]])
 
-        self.atualizar_saldo_inicial()
-
     # Faz a inclusão das inclusões e alterações feitas na lista self.balancete_verificacao no arquivo CSV
     # balancete.
     def atualizar_balancete(self):
@@ -411,12 +409,25 @@ class ControleFinanceiro:
              movto_cre, saldo_final]
         ]
         num_linha = int(numero_linha)
+        tam_saldo_inicial = len(self.saldo_inicial[1:])
+
         if num_linha < 1:
             raise ex.ExclusaoNaoPermitida('Exclusão não permitida. Os rótulos de colunas não podem ser removidos.')
+        if num_linha > tam_saldo_inicial:
+            raise ex.LinhaInexistente('A linha selecionada não existe.')
+
         for ind in lista_temp:
             for i, v in enumerate(ind):
                 if v != '':
                     self.balancete_verificacao[num_linha][i] = v
+
+        lista_ordenar_balancete = ManP.ordernar_balancete(self.balancete_verificacao)
+
+        self.balancete_verificacao.clear()
+
+        for _, val in enumerate(lista_ordenar_balancete):
+            self.balancete_verificacao.append([val[0], val[1], val[2], val[3], val[4], val[5], val[6],
+                                               val[7], val[8], val[9]])
 
     # Verifica se um conta de saldo inicial já possui um saldo inicial registrado.
     def verificar_conta_com_saldo_inicial(self, numero_conta):
@@ -433,9 +444,12 @@ class ControleFinanceiro:
         num_linha = int(numero_linha)
         if num_linha < 1:
             raise ex.ExclusaoNaoPermitida('Os rótulos das colunas não podem ser removidos.')
-        for i, v in enumerate(self.balancete_verificacao):
-            if str(num_linha).strip() == v[0]:
-                self.balancete_verificacao.pop(i)
+        tam_saldo_inicial = len(self.saldo_inicial[1:])
+        if num_linha > tam_saldo_inicial:
+            raise ex.LinhaInexistente('A linha selecionada não existe.')
+        for i, v in enumerate(self.saldo_inicial[1:]):
+            if num_linha == int(v[0]) and v[1] == 'SALDOINICIAL':
+                self.balancete_verificacao.pop(i + 1)
                 break
 
         lista_ordenar_balancete = ManP.ordernar_balancete(self.balancete_verificacao)
@@ -445,8 +459,6 @@ class ControleFinanceiro:
         for _, val in enumerate(lista_ordenar_balancete):
             self.balancete_verificacao.append([val[0], val[1], val[2], val[3], val[4], val[5], val[6],
                                                val[7], val[8], val[9]])
-
-        self.atualizar_saldo_inicial()
 
     # === MÉTODOS PARA CONSOLIDAR OS MOVIMENTOS A CREDITO E A DEBITO DO BALANCETE === #
 

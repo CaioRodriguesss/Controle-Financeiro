@@ -486,7 +486,7 @@ class InterfaceGrafica:
                                 saldo_final=values6['-SISALDO-']
                             )
                             CF.atualizar_balancete()
-
+                            CF.atualizar_saldo_inicial()
                             sg.popup(f"Saldo inicial da conta {values6['-SICONTA-']} incluído com sucesso!",
                                      title='Inclusão de Saldo Inicial')
                             for i in values6.keys():
@@ -569,21 +569,28 @@ class InterfaceGrafica:
                                 mes=values7['-ASIMES-'],
                                 ano=values7['-ASIANO-'],
                                 numero_conta=values7['-ASICONTA-'],
+                                desc_conta=values7['-ASICONTA-'],
                                 saldo_inicial=values7['-ASISALDIN-'],
                                 saldo_final=values7['-ASISALDIN-'],
                             )
                             CF.atualizar_balancete()
+                            CF.atualizar_saldo_inicial()
                             sg.popup(f"Linha {values7['-ASILIN-']} alterada com sucesso!",
                                      title='Alteração Saldo Inicial')
                             for i in values7.keys():
                                 if i != '-ASIREMOV-':
                                     window7[i].update(value='')
+
                         except ex.ExclusaoNaoPermitida:
                             sg.popup('Exclusão não permitida. Os rótulos de colunas não podem ser alterados.',
                                      title='Erro - Linha proibida')
                         except ex.CamposEmBranco:
                             sg.popup('O campo de sequência deve ser preenchido para efetuar uma alteração.',
                                      title='Erro - Linha em branco')
+                        except ex.LinhaInexistente:
+                            sg.popup('Não existe saldo inicial para a linha selecionada.',
+                                     title='Erro - Linha em branco')
+
                     if event7 == '-ASIALLIMP-':
                         for i in values7.keys():
                             if i != '-ASIREMOV-':
@@ -596,6 +603,7 @@ class InterfaceGrafica:
                         try:
                             CF.remover_saldo_inicial_balancete(values7['-ASIREMOV-'])
                             CF.atualizar_balancete()
+                            CF.atualizar_saldo_inicial()
                             sg.popup(f"Linha {values7['-ASIREMOV-']} removida com sucesso!",
                                      title='Remoção Saldo Inicial')
                             window7['-ASIREMOV-'].update(value='')
@@ -604,6 +612,9 @@ class InterfaceGrafica:
                         except ex.CamposEmBranco:
                             sg.popup('O campo de sequência deve ser preenchido para efetuar uma remoção.',
                                      title='Erro - Linha em branco')
+                            sg.popup('Não existe saldo inicial para a linha selecionada.',
+                                     title='Erro - Linha em branco')
+
                     if event7 == '-ASIRELIMP-':
                         window7['-ASIREMOV-'].update(value='')
                 window7.close()  # Falta implementar a visulização do balancete

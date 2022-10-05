@@ -64,7 +64,13 @@ dele para a sua área de trabalho</p>
     </ul>
 <li><a href="#Inclusao-de-si-contas"> Inclusão de saldo inicial das contas</a></li>
 <li><a href="#Manutencao-si"> Manutenção do saldo inicial das contas </a></li>
-<li>Lançamentos</li>
+    <ul>
+        <li><a href="#Alteracao-si-de-contas"> 
+             Alteração do saldo inicial das contas</a></li>
+        <li><a href="#Exclusao-si-de-contas"> 
+             Exclusao de conta com saldo inicial</a></li>
+    </ul>
+<li><a href="#Lancamentos"> Lançamentos</a></li>
 <li>Manutenção dos lançamentos</li>
 <li>Geração do balancete de verificação</li>
 <li>Manutenção do balancete de verificação</li>
@@ -223,6 +229,79 @@ número da conta como base.</p>
 </ol>
 
 <h3 id="Manutencao-si"> Manutenção do saldo inicial das contas </h3>
+
+<p>A tela de manutenção do saldo inicial também é dividida entre alterações
+nos campos incluídos de saldo inicial e na exclusão total da informação
+de uma conta com saldo inicial. Trataremos sobre as duas funções.</p>
+
+<h4 id="Alteracao-si-de-contas"> Alteração do saldo inicial das contas</h4>
+
+<ol>
+    <li>Abra a tela "Manutenção Saldos Iniciais".</li>
+    <br>
+    <li>Clique no botão de "Visualizar Saldo Inicial" para visualizar
+    as contas que possuem saldo inicial e a linha que representa
+    o dado que você quer alterar.</li>
+    <br>
+    <img src="Imagens guia de uso/4 - inclusao saldo inicial - 3.png">
+    <br>
+    <br>
+    <li>Para efetuar uma atualização de dados nos campos, utilizamos a
+    parte da tela de manutenção de saldo iniciais dentro do quadro de 
+    "Alterar Saldo Inicial"</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 1.png">
+    <br>
+    <br>
+    <li>Para alterarmos o saldo da conta "BANCO INTER", basta
+    selecionar o número da linha que a informação se encontra e preencher
+    o campo de "SALDO INICIAL" com o novo valor.</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 2.png">
+    <br>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 3.png">
+    <br>
+    <p>As alterações só ocorrem com o preenchimento de um ou mais campos 
+    que queremos alterar. Deixar qualquer campo passível de preenchimento 
+    sem preenchimento, não efetua nenhuma alteração.</p>
+    <li>É possível efetuar a alteração de mais de um campo ao mesmo tempo.
+    Vamos fazer a alteração de todos os campos possíveis na linha 2.</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 4.png">
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 5.png">
+</ol>
+
+<h4 id="Exclusao-si-de-contas"> Exclusão de conta com saldo inicial</h4>
+
+<p>Ainda na tela de "Manutenção Saldos Iniciais", também podemos
+   efetuar a exclusão de um registo utilizando o número da linha
+   que está localizado o dado.</p>
+
+<ol>
+    <li>Clique no botão de "Visualizar Saldo Inicial" para
+    identificar corretamente o número da linha que você deseja
+    excluir.</li>
+    <br>
+    <li>Para efetuar uma exclusão de registro, utilizamos a parte
+    da tela dentro do quadro "Remover Saldo Inicial".</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 6.png">
+    <br>
+    <br>
+    <li>Agora, preenchemos o campo "REMOCAO" com o número do registro
+    que queremos excluir.</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 7.png">
+    <br>
+    <br>
+    <li>Visualize os dados para ter certeza da exclusão.</li>
+    <br>
+    <img src="Imagens guia de uso/5 - manutencao saldo inicial - 8.png">
+</ol>
+
+<h3 id="Lancamentos"> Lançamentos</h3>
 
 
 
