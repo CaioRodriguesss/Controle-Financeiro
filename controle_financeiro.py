@@ -299,35 +299,6 @@ class ControleFinanceiro:
             if ind[1] == 'NORMAL':
                 break
 
-    # Altera qualquer campo do razão utilizando o numero da linha e da coluna como índices. None foi atribuído aos
-    # campos porque em caso de parâmetros com None, nenhuma alteração será feita no campo representado pela linha e
-    # pela coluna. O novo valor é atribuído acessando a linha informada e a coluna baseando-se na ordem dos índices
-    # da lista temporária que não possuem valor None.
-    def alterar_razao(self, numero_linha, sequencia='', data_lancamento='', conta_deb='', desc_conta_deb='',
-                      conta_cre='', desc_conta_cre='', valor='', descricao_fato='', data_inclusao=date.today()):
-        if str(numero_linha).strip() == '':
-            raise ex.CamposEmBranco('O campo de sequência deve ser preenchido para efetuar uma alteração.')
-        if str(numero_linha).strip() != '' and \
-                str(data_lancamento).strip() == '' and \
-                str(conta_deb).strip() == '' and \
-                str(desc_conta_deb).strip() == '' and \
-                str(conta_cre).strip() == '' and \
-                str(desc_conta_cre).strip() == '' and \
-                str(valor).strip() == '' and \
-                str(descricao_fato).strip() == '':
-            raise ex.NenhumaAlteracaoDefinida('Todos os campos passíveis de alteração estão em branco.')
-        num_linha = int(numero_linha)
-        if num_linha < 1:
-            raise ex.ExclusaoNaoPermitida('Os rótulos das colunas não podem ser alterados.')
-        lista_temp = [[sequencia, fdd.formatar_data(data_lancamento), fdd.formatar_conta(conta_deb), desc_conta_deb,
-                       fdd.formatar_conta(conta_cre), str(desc_conta_cre).strip().upper(),
-                       fdd.formata_valor_alteracoes(valor),
-                       str(descricao_fato).strip().upper(), data_inclusao.strftime('%x')]]
-        for ind in lista_temp:
-            for i, v in enumerate(ind):
-                if v != '':
-                    self.livro_razao[num_linha][i] = v
-
     # Remove qualquer lancamento do razão utilizando o número da linha como índice (remove a linha inteira)
     def remover_lancamento(self, numero_linha):
         if str(numero_linha).strip() == '':
@@ -336,7 +307,7 @@ class ControleFinanceiro:
         if num_linha < 1:
             raise ex.ExclusaoNaoPermitida('Os rótulos das colunas não podem ser removidos.')
         for i, v in enumerate(self.livro_razao):
-            if str(num_linha).strip() == v[0]:
+            if str(num_linha).strip() == str(v[0]).strip():
                 self.livro_razao.pop(i)
                 break
 
@@ -708,3 +679,15 @@ class ControleFinanceiro:
 
         for valor in lista_balanco_patrimonial_apos_exclusao:
             self.balanco_patrimonial.append(valor)
+
+    # Função que retorna uma lista com os lançamentos contábeis manipulados com o Pandas.
+    def visualizar_lancamentos_contabeis(self, demes, deano, atemes, ateano):
+        if str(demes).strip() == '' or \
+                str(deano).strip == '' or \
+                str(atemes).strip() == '' or \
+                str(ateano).strip() == '':
+            raise ex.CamposEmBranco('Existem campos em branco que deveriam ter ser preenchidos.')
+
+        lista_lancamentos = ManP.visualizar_lancamentos(demes, deano, atemes, ateano)
+
+        return lista_lancamentos

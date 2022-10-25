@@ -642,3 +642,72 @@ def verificar_limite_balanco_patrimonial():
         )
 
     return max(lista)
+
+
+# Função para retornar uma lista com os dados dos lançamentos contábeis contidos entre datas.
+
+def visualizar_lancamentos(de_mes, de_ano, ate_mes, ate_ano):
+    demes = int(de_mes)
+    deano = int(de_ano)
+    atemes = int(ate_mes)
+    ateano = int(ate_ano)
+
+    ultimo_de = monthrange(deano, demes)[1]
+    ultimo_ate = monthrange(ateano, atemes)[1]
+    de_data = date(deano, demes, ultimo_de)
+    ate_data = date(ateano, atemes, ultimo_ate)
+
+    # Condição para seleção de uma data limite (Até) ser menor que a data de partida (De).
+    if de_data > ate_data:
+        raise ex.DataPosteriorMenor('A data posterior (Até) é menor que a data de partida (De).')
+
+    # Condição para o caso de não existir dados no arquivo que correspondam ao ponto de partida (De).
+    if de_data < verificar_inicio_final_lancamentos()[0]:
+        raise ex.PontoDePartidaInexistente('Não existem dados para o ponto de partida inicial.')
+
+    # Data limite que consta no arquivo do LIVRO RAZAO.
+    limite = verificar_inicio_final_lancamentos()[1]
+
+    # No caso da data limite (Até) ser maior do que a data limite do arquivo, os nossos parâmetros recebem o ano
+    # e o mês da data limite do arquivo.
+    if ate_data > limite:
+        atemes = limite.month
+        ateano = limite.year
+
+    df = pd.read_csv('LIVRO RAZAO.csv')
+
+    df['DATA_FATO'] = pd.to_datetime(arg=df['DATA_FATO'], format='%d/%m/%Y')
+
+    df = df.loc[
+         (df['DATA_FATO'].dt.month >= demes) &
+         (df['DATA_FATO'].dt.year >= deano) &
+         (df['DATA_FATO'].dt.month <= atemes) &
+         (df['DATA_FATO'].dt.year <= ateano), :
+         ]
+
+    df['DATA_FATO'] = df['DATA_FATO'].dt.strftime(date_format='%d/%m/%Y')
+
+    lista = [[x for x in df.keys()]]
+
+    for row, col in df.iterrows():
+        lista.append(list(col))
+
+    return lista
+
+
+# Função para verificar o período inicial e o período final que possuem lançamentos contábeis.
+
+def verificar_inicio_final_lancamentos():
+    df = pd.read_csv('LIVRO RAZAO.csv', usecols=['DATA_FATO'])
+
+    df['DATA_FATO'] = pd.to_datetime(arg=df['DATA_FATO'], format='%d/%m/%Y')
+
+    min_data = df['DATA_FATO'].min()
+
+    min_data = date(min_data.year, min_data.month, min_data.day)
+
+    max_data = df['DATA_FATO'].max()
+
+    max_data = date(max_data.year, max_data.month, max_data.day)
+
+    return (min_data, max_data)

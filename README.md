@@ -71,7 +71,7 @@ dele para a sua área de trabalho</p>
              Exclusao de conta com saldo inicial</a></li>
     </ul>
 <li><a href="#Lancamentos"> Lançamentos</a></li>
-<li>Manutenção dos lançamentos</li>
+<li><a href="#manutencao-lancamentos"> Manutenção dos lançamentos</a></li>
 <li>Geração do balancete de verificação</li>
 <li>Manutenção do balancete de verificação</li>
 <li>Apuração do resultado do exercício</li>
@@ -303,6 +303,42 @@ de uma conta com saldo inicial. Trataremos sobre as duas funções.</p>
 
 <h3 id="Lancamentos"> Lançamentos</h3>
 
+<p>Os lançamentos</p>
+
+<ol>
+    <li>Abra a tela chamada "Lançamentos"</li>
+    <br>
+    <img src="Imagens guia de uso/6 - lancamentos - 1.png">
+    <br>
+    <br>
+    <li>Selecione a conta que deve receber um valor a débito, a conta
+    que deve receber um valor a crédito, o valor da operação, 
+    a data que ocorreu a operação e informe uma descrição do ocorrido
+    para manter o histórico.</li>
+    <p>Como exemplo, iremos supor que alguém tenha ido ao cabeleireiro, 
+    cortado o cabelo e tenha pago o serviço utilizando o débito 
+    automático do cartão do banco (débito em conta). O lançamento
+    seria como a seguir:</p>
+    <br>
+    <img src="Imagens guia de uso/6 - lancamentos - 2.png">
+    <br>
+    <br>
+    <li>Clique em lançar para efetuar o lançamento, gerando uma mensagem
+    na tela de lançamento efetuado com o lançamento feito.</li>
+    <br>
+    <img src="Imagens guia de uso/6 - lancamentos - 3.png">
+    <br>
+    <br>
+    <li>É possível visualizar o lançamento efetuado
+    preenchendo os campos para visualização de lançamentos. Preencha
+    o mês e o ano de partida e o mês e o ano de limite para visualizar
+    os lançamentos dentro deste perído, por último, clique no botão
+    "Visualizar Lançamentos".</li>
+    <br>
+    <img src="Imagens guia de uso/6 - lancamentos - 4.png">
+</ol>
+
+<h3 id="manutencao-lancamentos"> Manutenção dos Lançamentos</h3>
 
 
 

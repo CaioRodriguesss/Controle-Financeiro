@@ -17,6 +17,7 @@ class InterfaceGrafica:
 
         # Layout principal com botões para seleção da INTERFACE GRÁFICA desejada. Cada botão possui um key que gera um
         # evento de entrada em outras interfaces do programa com função de operação real.
+
         prin_tam = (34, 1)
         principal_layout = [
             [sg.T('TELAS PARA CONTROLE FINANCEIRO', justification='center', size=(70, 1))],
@@ -139,8 +140,16 @@ class InterfaceGrafica:
                 lc_layout = [
                     [sg.Col(lc_coluna_direita), sg.Col(lc_coluna_esquerda)],
                     [sg.T(' Descricao', size=lc_t_tam), sg.In(key='-LCDESC-', size=(104, 1)),
-                     sg.B(key='-LCBLAN-', button_text='Lançar'),
-                     sg.B(key='-LCBLIM-', button_text='Limpar'), sg.B(key='-LCBSAIR-', button_text='Sair')],
+                     sg.B(key='-LCBLAN-', button_text='Lançar'), sg.B(key='-LCBLIM-', button_text='Limpar'),
+                     sg.B(key='-LCBSAIR-', button_text='Sair')],
+                    [sg.T('Visualizar Lançamentos', size=lc_t_tam), sg.T('De:'),
+                     sg.T('Mes'), sg.Combo(key='-LCDEMES-', values=[x for x in range(1, 13)], readonly=True),
+                     sg.T('Ano'), sg.Combo(key='-LCDEANO-', values=[x for x in prin_anos], readonly=True),
+                     sg.T('Até:'),
+                     sg.T('Mes'), sg.Combo(key='-LCATEMES-', values=[x for x in range(1, 13)], readonly=True),
+                     sg.T('Ano'), sg.Combo(key='-LCATEANO-', values=[x for x in prin_anos], readonly=True),
+                     sg.Push(), sg.B(key='-LCBVIS-', button_text='Visualizar Lançamentos'),
+                     sg.B(key='-LCBVISLIMP-', button_text='Limpar')],
                     [sg.T(' Lançamento efetuado', size=lc_t_tam), sg.Multiline(key='-LCEFET-', size=(125, 10))],
                 ]
                 window3 = sg.Window('Interface para Lançamentos Contáveis', layout=lc_layout)
@@ -178,7 +187,7 @@ class InterfaceGrafica:
                                                       f"{CF.data_do_lancamento(values3['-LCDATLAN-'])}\n"
                                                       )
                             for key in values3.keys():
-                                if key != '-LCEFET-':
+                                if key not in ['-LCEFET-', '-LCDEMES-', '-LCDEANO-', '-LCATEMES-', '-LCATEANO-']:
                                     window3[key].update(value='')
                         except ex.DiaInvalido:
                             sg.popup('Data inválida.O dia deve estar contido entre 01 e 31.', title='Erro')
@@ -192,7 +201,51 @@ class InterfaceGrafica:
                             sg.popup('A data está incompleta.', title='Erro')
                     if event3 == '-LCBLIM-':
                         for key in values3.keys():
-                            window3[key].update(value='')
+                            if key not in ['-LCDEMES-', '-LCDEANO-', '-LCATEMES-', '-LCATEANO-']:
+                                window3[key].update(value='')
+
+                    # Evento que gera a janela de visualização dos lançamentos contábeis.
+                    if event3 == '-LCBVIS-':
+                        try:
+                            lista_lancamentos = CF.visualizar_lancamentos_contabeis(
+                                demes=values3['-LCDEMES-'],
+                                deano=values3['-LCDEANO-'],
+                                atemes=values3['-LCATEMES-'],
+                                ateano=values3['-LCATEANO-']
+                            )
+                            lc_layout_visualizar_lancamentos = [
+                                [sg.T(f"Lançamentos Contábeis de {values3['-LCDEMES-']}/{values3['-LCDEANO-']} ate"
+                                      f" {values3['-LCATEMES-']}/{values3['-LCATEANO-']}")],
+                                [sg.Table(headings=[c for c in lista_lancamentos[0]],
+                                          values=[c for c in lista_lancamentos[1:]],
+                                          justification='left',
+                                          key='-LCVISLAN-')],
+                                [sg.B(key='-LCVISLANBOK-', button_text='OK')],
+                            ]
+
+                            window3_1 = sg.Window(title='Lançamentos Contábeis',
+                                                  layout=lc_layout_visualizar_lancamentos)
+
+                            while True:
+                                event3_1, values3_1 = window3_1.read()
+
+                                if event3_1 == sg.WIN_CLOSED or event3_1 == '-LCVISLANBOK-':
+                                    break
+
+                            window3_1.close()
+                        except ex.CamposEmBranco:
+                            sg.popup('Existem campos em branco que deveriam ter sido preenchidos.',
+                                     title='Erro na visualização')
+                        except ex.DataPosteriorMenor:
+                            sg.popup('A data posterior (Até) é menor que a data de partida (De).',
+                                     title='Erro na visualização')
+                        except ex.PontoDePartidaInexistente:
+                            sg.popup('Não existem dados para o ponto de partida inicial.',
+                                     title='Erro na visualização')
+                    # Evento de limpeza dos dados de visualização dos lançamentos contábeis.
+                    if event3 == '-LCBVISLIMP-':
+                        for i in ['-LCDEMES-', '-LCDEANO-', '-LCATEMES-', '-LCATEANO-']:
+                            window3[i].update(value='')
                 window3.close()
 
             # === INTERFACE GRÁFICA PARA ALTERACAO OU REMOCAO DO PLANO DE CONTAS === #
@@ -325,36 +378,20 @@ class InterfaceGrafica:
             # Para o quadro remover os botões estão com o código de evento '-ARZRE(...)-',
             # sigla para "A"ltera "R"azão "RE"mover.
             if event == '-PRINMANRA-':
-                arz_colunas = ['NUM_LINHA_ALTERAR', 'DATA_FATO', 'CONTA_DEBITO', 'DESC_CONTA_DEB', 'CONTA_CREDITO',
-                               'DESC_CONTA_CRED', 'VALOR', 'DESC_DO_FATO']
                 arz_t_tam = (36, 1)
-                arz_quadro_alterar_razao = [
-                    [sg.T('PREENCHA SOMENTE OS CAMPOS QUE DEVEM SER ALTERADOS', size=(126, 1), justification='center',
-                          background_color="red")],
-
-                    [sg.T(i, size=(32, 1)) for i in arz_colunas[0:4]],
-
-                    [sg.In(key='-ARZLIN-', size=arz_t_tam, enable_events=True),
-                     sg.In(key='-ARZDFATO-', size=arz_t_tam, enable_events=True),
-                     sg.In(key='-ARZCDEB-', size=arz_t_tam, enable_events=True),
-                     sg.In(key='-ARZDESCDEB-', size=arz_t_tam)],
-
-                    [sg.T(i, size=(32, 1)) for i in arz_colunas[4:]],
-
-                    [sg.In(key='-ARZCCRE-', size=arz_t_tam, enable_events=True),
-                     sg.In(key='-ARZDESCCRE-', size=arz_t_tam),
-                     sg.In(key='-ARZVAL-', size=arz_t_tam, enable_events=True),
-                     sg.In(key='-ARZDESCF-', size=arz_t_tam)],
-                ]
                 arz_quadro_remover_razao = [
                     [sg.T('Número da linha do lançamento', size=(133, 1))],
                     [sg.In(key='-ARZRELIN-', size=arz_t_tam)],
                 ]
                 arz_layout = [
-                    [sg.Frame(title='ALTERAR LANCAMENTO DO RAZAO', layout=arz_quadro_alterar_razao,
-                              title_location='n')],
-                    [sg.Push(), sg.B(key='-ARZARALT-', button_text='Alterar'),
-                     sg.B(key='-ARZARLIMP-', button_text='Limpar'), sg.B(key='-ARZARCANC-', button_text='Cancelar')],
+                    [sg.T('Visualizar Lançamentos'), sg.T('De:'),
+                     sg.T('Mes'), sg.Combo(key='-ARZDEMES-', values=[x for x in range(1, 13)], readonly=True),
+                     sg.T('Ano'), sg.Combo(key='-ARZDEANO-', values=[x for x in prin_anos], readonly=True),
+                     sg.T('Até:'),
+                     sg.T('Mes'), sg.Combo(key='-ARZATEMES-', values=[x for x in range(1, 13)], readonly=True),
+                     sg.T('Ano'), sg.Combo(key='-ARZATEANO-', values=[x for x in prin_anos], readonly=True),
+                     sg.Push(), sg.B(key='-ARZBVIS-', button_text='Visualizar Lançamentos'),
+                     sg.B(key='-ARZBVISLIMP-', button_text='Limpar')],
                     [sg.Frame(title='REMOVER LANÇAMENTO DO RAZAO', layout=arz_quadro_remover_razao,
                               title_location='n')],
                     [sg.Push(), sg.B(key='-ARZREREM-', button_text='Remover'),
@@ -366,48 +403,48 @@ class InterfaceGrafica:
                     event5, values5 = window5.read()
                     if event5 == sg.WIN_CLOSED or event5 == '-ARZARCANC-':
                         break
-                    if event5 == '-ARZLIN-' and values5['-ARZLIN-'] and values5['-ARZLIN-'][-1] not in '0123456789':
-                        window5['-ARZLIN-'].update(value=values5['-ARZLIN-'][0:-1])
-                    if event5 == '-ARZDFATO-' and values5['-ARZDFATO-'] and \
-                            values5['-ARZDFATO-'][-1] not in '0123456789/':
-                        window5['-ARZDFATO-'].update(value=values5['-ARZDFATO-'][0:-1])
-                    if len(values5['-ARZDFATO-']) > 10:
-                        window5['-ARZDFATO-'].update(value=values5['-ARZDFATO-'][0:10])
-                    if event5 == '-ARZCDEB-' and values5['-ARZCDEB-'] and values5['-ARZCDEB-'][-1] not in '0123456789.':
-                        window5['-ARZCDEB-'].update(value=values5['-ARZCDEB-'][0:-1])
-                    if event5 == '-ARZCCRE-' and values5['-ARZCCRE-'][0:] and \
-                            values5['-ARZCCRE-'][-1] not in '.0123456789':
-                        window5['-ARZCCRE-'].update(value=values5['-ARZCCRE-'][0:-1])
-                    if event5 == '-ARZVAL-' and values5['-ARZVAL-'] and values5['-ARZVAL-'][-1] not in '0123456789.,':
-                        window5['-ARZVAL-'].update(value=values5['-ARZVAL-'][0:-1])
-                    if event5 == '-ARZARALT-':
+                    # Evento de limpeza dos dados de visualização dos lançamentos contábeis.
+                    if event5 == '-ARZBVISLIMP-':
+                        for i in ['-ARZDEMES-', '-ARZDEANO-', '-ARZATEMES-', '-ARZATEANO-']:
+                            window5[i].update(value='')
+
+                    if event5 == '-ARZBVIS-':
                         try:
-                            CF.alterar_razao(
-                                numero_linha=values5['-ARZLIN-'],
-                                data_lancamento=values5['-ARZDFATO-'],
-                                conta_deb=values5['-ARZCDEB-'],
-                                desc_conta_deb=values5['-ARZDESCDEB-'],
-                                conta_cre=values5['-ARZCCRE-'],
-                                desc_conta_cre=values5['-ARZDESCCRE-'],
-                                valor=values5['-ARZVAL-'],
-                                descricao_fato=values5['-ARZDESCF-']
+                            lista_lancamentos = CF.visualizar_lancamentos_contabeis(
+                                demes=values5['-ARZDEMES-'],
+                                deano=values5['-ARZDEANO-'],
+                                atemes=values5['-ARZATEMES-'],
+                                ateano=values5['-ARZATEANO-']
                             )
-                            CF.atualizar_livro_razao()
-                            sg.popup('Lançamento alterado com sucesso!', title='Alteração no lançamento')
-                            for i in values5.keys():
-                                if i != '-ARZLINHA-':
-                                    window5[i].update(value='')
-                        except ex.ExclusaoNaoPermitida:
-                            sg.popup('Os rótulos das colunas não podem ser alterados.', title='Erro')
+                            arz_layout_visualizar_lancamentos = [
+                                [sg.T(f"Lançamentos Contábeis de {values5['-ARZDEMES-']}/{values5['-ARZDEANO-']} ate"
+                                      f" {values5['-ARZATEMES-']}/{values5['-ARZATEANO-']}")],
+                                [sg.Table(headings=[c for c in lista_lancamentos[0]],
+                                          values=[c for c in lista_lancamentos[1:]],
+                                          justification='left',
+                                          key='-ARZVISLAN-')],
+                                [sg.B(key='-ARZVISLANBOK-', button_text='OK')],
+                            ]
+
+                            window5_1 = sg.Window(title='Visualizar Lançamentos',
+                                                  layout=arz_layout_visualizar_lancamentos)
+
+                            while True:
+                                event5_1, values5_1 = window5_1.read()
+
+                                if event5_1 == sg.WIN_CLOSED or event5_1 == '-ARZVISLANBOK-':
+                                    break
+
+                            window5_1.close()
                         except ex.CamposEmBranco:
-                            sg.popup('O campo de sequência deve ser preenchido para efetuar uma alteração',
-                                     title='Erro')
-                        except ex.NenhumaAlteracaoDefinida:
-                            sg.popup('Todos os campos passíveis de alteração estão em branco.', title='Erro')
-                    if event5 == '-ARZARLIMP-':
-                        for i in values5.keys():
-                            if i != '-ARZLINHA-':
-                                window5[i].update(value='')
+                            sg.popup('Existem campos em branco que deveriam ter sido preenchidos.',
+                                     title='Erro na visualização')
+                        except ex.DataPosteriorMenor:
+                            sg.popup('A data posterior (Até) é menor que a data de partida (De).',
+                                     title='Erro na visualização')
+                        except ex.PontoDePartidaInexistente:
+                            sg.popup('Não existem dados para o ponto de partida inicial.',
+                                     title='Erro na visualização')
 
                     if event5 == '-ARZRECANC-':
                         break
